@@ -14,10 +14,10 @@ class @me.cardiology {
   #_[confirmation="create ruleset"]
   #[doc="create ruleset determining when to measure blood pressure and when to notify the doctor"]
 
-  query ruleset(out ruleset: Entity(me.cardiology:ruleset))
+  query instructions(out instructions: String)
   #_[canonical="see blood pressure instructions on cardiology project"]
   #_[confirmation="blood pressure instructions"]
-  #[doc="get the blood pressure measurement ruleset that was most recently created"]
+  #[doc="get the blood pressure measurement instructions that were most recently created"]
 
   action update_times(in req times: String #_[prompt="When should the patient record their blood pressure?"])
   #_[canonical="update times on cardiology project"]

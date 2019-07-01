@@ -14,10 +14,12 @@ var client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 /*
  * Formats the ruleset so that it is readable by humans.
  */
-function format_ruleset(ruleset) {
+function format_instructions(times, triggers) {
+  let instructions = null;
+
   // TODO: Insert code here
 
-  return ruleset;
+  return instructions;
 }
 
 module.exports = class Cardiology extends Tp.BaseDevice {
@@ -29,15 +31,15 @@ module.exports = class Cardiology extends Tp.BaseDevice {
     this.description = "This is your Cardiology Account. You can use it to"
       + " remind patients to track their blood pressure regularly.";
 
-    this._ruleset = null;
-    this._feed = null;
+    this._times = null;
+    this._triggers = null;
   }
 
   /*
    * Get alerts about potentially dangerous blood pressure readings
    */
   get_alerts() {
-    alerts = null;
+    let alerts = null;
 
     // TODO: Insert code here
 
@@ -48,24 +50,29 @@ module.exports = class Cardiology extends Tp.BaseDevice {
    * Create instructions to measure blood pressure
    */
   do_create_ruleset({ times, triggers }) {
-    // TODO: Insert code here
+    // TODO: Use basic NLP / UI to standardize times and triggers
+
+    // Placeholder code
+    this._times = times;
+    this._triggers = triggers;
   }
 
   /*
    * Get the instructions to measure blood pressure that were most
    * recently created
    */
-  get_ruleset() {
-    var ruleset = this._ruleset;
-    ruleset = format_ruleset(ruleset);
-    return [{ ruleset: ruleset }];
+  get_instructions() {
+    let instructions = format_instructions(this._times, this._triggers);
+    return [{ instructions: instructions }];
   }
 
   /*
    * Update times at which the patient should record their blood pressure
    */
   do_update_times({ times }) {
-    // TODO: Insert code here
+    // TODO: Use basic NLP / UI to standardize times
+
+    this._times = times;
   }
 
   /*
@@ -73,7 +80,9 @@ module.exports = class Cardiology extends Tp.BaseDevice {
    * notified
    */
   do_update_triggers({ triggers }) {
-    // TODO: Insert code here
+    // TODO: Use basic NLP / UI to standardize triggers
+
+    this._triggers = triggers;
   }
 
   /*
@@ -82,14 +91,17 @@ module.exports = class Cardiology extends Tp.BaseDevice {
    * Each patient is uniquely identified by their phone number
    */
   do_send_ruleset({ phone_number }) {
-    var ruleset = this._ruleset;
-    ruleset = format_ruleset(ruleset);
+    let instructions = format_instructions(this._times, this._triggers);
 
     // Sends the SMS message through Twilio
     client.messages.create({
       to: phone_number,
-      from: '17149474157', // Twilio trial number
-      body: ruleset
+      from: '17149474157', // Twilio trial phone number
+      body: JSON.stringify({
+        times: this._times,
+        triggers: this._triggers,
+        instructions: instructions
+      })
     });
   }
 };
