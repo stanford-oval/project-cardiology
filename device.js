@@ -4,6 +4,9 @@ const Tp = require('thingpedia');
 const twilio = require('twilio'); // https://www.twilio.com
 
 // These values can be found in the Twilio console.
+// WARNING: Need to replace these for production. This is just a test account --
+// no billing information is attached. In production, we will not store the
+// AUTH_TOKEN on GitHub.
 const TWILIO_ACCOUNT_SID = 'ACe43881bb16f358819e5e0150b7d30f2b';
 const TWILIO_AUTH_TOKEN = 'a231bfe257bb39db74731b7e354441da';
 var client = new twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
