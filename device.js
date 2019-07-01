@@ -47,7 +47,7 @@ module.exports = class Cardiology extends Tp.BaseDevice {
   /*
    * Create instructions to measure blood pressure
    */
-  do_create_ruleset({ instructions }) {
+  do_create_ruleset({ times, triggers }) {
     // TODO: Insert code here
   }
 
@@ -62,10 +62,17 @@ module.exports = class Cardiology extends Tp.BaseDevice {
   }
 
   /*
-   * Make corrections to the blood pressure measurement instructions
-   * before sending
+   * Update times at which the patient should record their blood pressure
    */
-  do_edit_ruleset({ instructions }) {
+  do_update_times({ times }) {
+    // TODO: Insert code here
+  }
+
+  /*
+   * Update blood pressure measurements at which you should be automatically
+   * notified
+   */
+  do_update_triggers({ triggers }) {
     // TODO: Insert code here
   }
 
