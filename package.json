@@ -4,5 +4,6 @@
   "description": "A virtual assistant, based on Almond, that helps doctors remind patients to track their blood pressure regularly.",
   "main": "device.js",
   "dependencies": {
+    "twilio": "^3.33.0"
   }
 }
