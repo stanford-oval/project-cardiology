@@ -23,7 +23,7 @@ class @me.cardiology {
   #_[confirmation="edit instructions"]
   #[doc="make corrections to the blood pressure measurement instructions before sending"]
 
-  action send_ruleset()
+  action send_ruleset(in req phone_number: String)
   #_[canonical="send instructions on cardiology project"]
   #_[confirmation="send instructions"]
   #[doc="send the blood pressure measurement instructions to the patient's virtual assistant"]
