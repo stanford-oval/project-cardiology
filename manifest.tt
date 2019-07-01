@@ -1,6 +1,6 @@
 class @me.cardiology {
   import loader from @org.thingpedia.v2();
-  import config from @org.thingpedia.config.oauth2();
+  import config from @org.thingpedia.config.form(params=makeArgMap(api_key:String));
 
   monitorable list query alerts(out feed: Entity(me.cardiology:alerts))
   #_[canonical="get alerts on cardiology project"]
