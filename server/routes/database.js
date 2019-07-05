@@ -111,7 +111,7 @@ router.get('/retrieve', (req, res) => {
             return res.status(400).json({ error: "You don't have access to this patient's measurements" });
           }
 
-          return res.status(200).json({ measurements: patient.measurements });
+          return res.status(200).json(patient.measurements);
         });
       });
     });
