@@ -1,4 +1,4 @@
 dataset @org.thingpedia.cardiology.patient {
-  action (p_measurement :String) := @org.thingpedia.cardiologypatient.record(measurement=$p_measurement)
+  action (p_measurement :String) := @org.thingpedia.cardiology.patient.record(measurement=$p_measurement)
   #_[utterances=["record blood pressure of $p_measurement", "my blood pressure is $p_measurement"]];
 }
