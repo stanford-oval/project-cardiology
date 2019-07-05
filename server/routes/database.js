@@ -10,8 +10,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 
 router.post('/upload', (req, res) => {
   let doctor_email = req.body.doctor_email;
-  let doctor_password = req.body.doctor_password;
   let email = req.body.email;
+  let password = req.body.password;
   let time = req.body.time;
   let measurement = req.body.measurement;
 
@@ -29,12 +29,12 @@ router.post('/upload', (req, res) => {
     const patients = client.db("cardiology").collection("patients");
     const users = client.db("cardiology").collection("users");
 
-    users.findOne({ email: doctor_email }, (err, user) => {
+    users.findOne({ email: email }, (err, user) => {
       if (!user) {
-        return res.status(400).json({ error: "Doctor with this email doesn't exist" });
+        return res.status(400).json({ error: "Patient with this email doesn't exist" });
       }
 
-      bcrypt.compare(doctor_password, user.hash, function (err, same_password) {
+      bcrypt.compare(password, user.hash, function (err, same_password) {
         if (err) {
           return res.status(500).json({ error: 'Error while hashing the password' });
         }
@@ -45,10 +45,6 @@ router.post('/upload', (req, res) => {
 
         patients.findOne({ email: email }, (err, patient) => {
           if (patient) {
-            if (doctor_email !== patient.doctor) {
-              return res.status(400).json({ error: "You don't have access to this patient's measurements" });
-            }
-
             patients.update(
               { "_id" : patient._id  },
               { "$addToSet" : { "measurements" : { "time": time, "measurement": measurement } } }
@@ -59,10 +55,10 @@ router.post('/upload', (req, res) => {
             patients.insertOne({
               email: email,
               doctor: doctor_email,
-              measurements: {
+              measurements: [{
                 time: time,
                 measurement: measurement
-              }
+              }]
             });
 
             res.sendStatus(200);
