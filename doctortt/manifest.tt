@@ -1,4 +1,4 @@
-class @org.thingpedia.cardiologydoctor {
+class @org.thingpedia.cardiology.doctor {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
