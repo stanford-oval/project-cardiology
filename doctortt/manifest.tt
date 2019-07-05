@@ -8,9 +8,9 @@ class @me.cardiology {
   #_[confirmation="sign up"]
   #[doc="sign up for a cardiology account"]
 
-  query retrieve(req in email: String #_[prompt="Please enter your username."],
+  query measurements(req in email: String #_[prompt="Please enter your username."],
                  req in password: String #_[prompt="Please enter your password."],
-                 req in patient_name: String #_[prompt="Which patient do you want to retrieve records for?"],
+                 req in patient_email: String #_[prompt="Please enter the email of the patient for which you would like to retrieve measurements."],
                  out measurements: String)
   #_[canonical="get blood pressure records of a patient"]
   #_[confirmation="blood pressure records"]
