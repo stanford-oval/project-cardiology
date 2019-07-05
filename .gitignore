@@ -1,5 +1,12 @@
 /doctortt/node_modules
 /doctortt/package-lock.json
+/doctortt/.DS_Store
 
 /patienttt/node_modules
 /patienttt/package-lock.json
+/patienttt/.DS_Store
+
+/doctortt_zip
+/patienttt_zip
+
+.DS_Store

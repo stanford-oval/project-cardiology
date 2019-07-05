@@ -41,7 +41,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
       });
 
       res.on('end', () => {
-        return [{ measurements: JSON.stringify(measurements) }];
+        return measurements;
       })
     }).on('error', error => {
       console.error(error);
