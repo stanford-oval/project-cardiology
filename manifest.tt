@@ -2,35 +2,17 @@ class @me.cardiology {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.form(params=makeArgMap(api_key:String));
 
-  monitorable list query alerts(out feed: Entity(me.cardiology:alerts))
-  #_[canonical="get alerts on cardiology project"]
-  #_[confirmation="blood pressure alerts"]
-  #[doc="get alerts about potentially dangerous blood pressure readings"]
-  #[poll_interval=5min]
+  action signup(req in email: String #_[prompt="What do you want your username to be?"],
+                req in password: String #_[prompt="What do you want your password to be?"])
+  #_[canonical="sign up for a cardiology account"]
+  #_[confirmation="sign up"]
+  #[doc="sign up for a cardiology account"]
 
-  action create_ruleset(in req times: String #_[prompt="When should the patient record their blood pressure?"],
-                        in req triggers: String #_[prompt="At what blood pressure measurement should you be automatically notified?"])
-  #_[canonical="create ruleset on cardiology project"]
-  #_[confirmation="create ruleset"]
-  #[doc="create ruleset determining when to measure blood pressure and when to notify the doctor"]
-
-  query instructions(out instructions: String)
-  #_[canonical="see blood pressure instructions on cardiology project"]
-  #_[confirmation="blood pressure instructions"]
-  #[doc="get the blood pressure measurement instructions that were most recently created"]
-
-  action update_times(in req times: String #_[prompt="When should the patient record their blood pressure?"])
-  #_[canonical="update times on cardiology project"]
-  #_[confirmation="update times"]
-  #[doc="update times at which the patient should record their blood pressure"]
-
-  action update_triggers(in req triggers: String #_[prompt="At what blood pressure measurement should you be automatically notified?"])
-  #_[canonical="update notification triggers on cardiology project"]
-  #_[confirmation="update notification triggers"]
-  #[doc="update blood pressure measurements at which you should be automatically notified"]
-
-  action send_ruleset(in req phone_number: String)
-  #_[canonical="send instructions on cardiology project"]
-  #_[confirmation="send instructions"]
-  #[doc="send the blood pressure measurement instructions to the patient's virtual assistant"]
+  query retrieve(req in email: String #_[prompt="Please enter your username."],
+                 req in password: String #_[prompt="Please enter your password."],
+                 req in patient_name: String #_[prompt="Which patient do you want to retrieve records for?"],
+                 out measurements: String)
+  #_[canonical="get blood pressure records of a patient"]
+  #_[confirmation="blood pressure records"]
+  #[doc="get a patient's blood pressure measurements"]
 }
