@@ -13,13 +13,6 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   }
 
   /*
-   * Sign up for a cardiology acccount
-   */
-  do_signup({ email, password }) {
-    // TODO: Signup code here
-  }
-
-  /*
    * Get the patient's measurements
    */
   get_measurements({ email, password, patient_email }) {

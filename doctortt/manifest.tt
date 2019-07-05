@@ -1,17 +1,9 @@
 class @me.cardiology {
   import loader from @org.thingpedia.v2();
-  import config from @org.thingpedia.config.form(params=makeArgMap(api_key:String));
+  import config from @org.thingpedia.config.basic_auth();
 
-  action signup(req in email: String #_[prompt="What do you want your username to be?"],
-                req in password: String #_[prompt="What do you want your password to be?"])
-  #_[canonical="sign up for a cardiology account"]
-  #_[confirmation="sign up"]
-  #[doc="sign up for a cardiology account"]
-
-  query measurements(req in email: String #_[prompt="Please enter your username."],
-                 req in password: String #_[prompt="Please enter your password."],
-                 req in patient_email: String #_[prompt="Please enter the email of the patient for which you would like to retrieve measurements."],
-                 out measurements: String)
+  query measurements(req in patient_email: String #_[prompt="Please enter the email of the patient for which you would like to retrieve measurements."],
+                     out measurements: String)
   #_[canonical="get blood pressure records of a patient"]
   #_[confirmation="blood pressure records"]
   #[doc="get a patient's blood pressure measurements"]
