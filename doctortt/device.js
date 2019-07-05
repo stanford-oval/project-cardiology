@@ -4,7 +4,8 @@ const Tp = require('thingpedia');
 const https = require('https');
 
 var options_retrieve = {
-  hostname: 'https://almond-cardiology.herokuapp.com',
+  protocol: 'https:',
+  hostname: 'almond-cardiology.herokuapp.com',
   path: '/retrieve?', // Query parameters are added later during function call
   method: 'GET',
   headers: {
@@ -13,6 +14,10 @@ var options_retrieve = {
     'Access-Control-Allow-Headers': 'X-Requested-With'
   }
 };
+
+// TODO: This is test data (will be changed later)
+const doctor_email = "rickygv@stanford.edu";
+const doctor_password = "test";
 
 module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   constructor(engine, state) {
@@ -31,18 +36,13 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
    * Retrieves the patient's blood pressure measurements from the databse
    */
   get_measurements({ email }) {
-    let measurements = null;
-    options_retrieve.path = '/retrieve?email=' + email;
+    options_retrieve.path = '/retrieve?email=' + email + '&doctor_email=' + doctor_email + '&doctor_password=' + doctor_password;
 
     https.get(options_retrieve, res => {
       res.on('data', d => {
-        measurements = d;
         console.log('Successfully retrieved measurements from database');
+        return JSON.parse(d.toString());
       });
-
-      res.on('end', () => {
-        return measurements;
-      })
     }).on('error', error => {
       console.error(error);
     });
