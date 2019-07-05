@@ -4,5 +4,6 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "https": "^1.0.0"
   }
 }

@@ -1,4 +1,4 @@
-class @me.cardiology {
+class @org.thingpedia.cardiologypatient {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
