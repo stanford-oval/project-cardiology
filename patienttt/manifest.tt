@@ -5,5 +5,5 @@ class @org.thingpedia.cardiologypatient {
   action record(in req measurement: String #_[prompt="Please enter your blood pressure recording."])
   #_[canonical="record the patient's blood pressure"]
   #_[confirmation="record blood pressure"]
-  #[doc="allows the patient to upload their blood pressure measurements for their doctor"]
+  #[doc="allows the patient to upload their blood pressure measurements for their doctor"];
 }

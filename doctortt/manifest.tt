@@ -8,5 +8,5 @@ class @org.thingpedia.cardiologydoctor {
   #_[canonical="get blood pressure records of a patient"]
   #_[confirmation="blood pressure records"]
   #[doc="get a patient's blood pressure measurements"]
-  #[poll_interval=60min]
+  #[poll_interval=60min];
 }
