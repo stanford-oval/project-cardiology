@@ -21,6 +21,9 @@ router.post('/signup', (req, res) => {
   console.log('Signing up: ' + email);
 
   client.connect(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
+    }
     const users = client.db("cardiology").collection("users");
 
     users.findOne({ email: email }, (err, user) => {
@@ -59,6 +62,9 @@ router.post('/login', (req, res) => {
   console.log('Logging in: ' + email);
 
   client.connect(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
+    }
     const users = client.db("cardiology").collection("users");
 
     bcrypt.hash(password, 10, function (err, hash) {

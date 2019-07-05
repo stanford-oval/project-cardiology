@@ -18,6 +18,9 @@ router.post('/upload', (req, res) => {
   console.log('Uploading data for patient: ' + email);
 
   client.connect(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
+    }
     const patients = client.db("cardiology").collection("patients");
 
     patients.findOne({ email: email }, (err, patient) => {
@@ -34,6 +37,7 @@ router.post('/upload', (req, res) => {
         res.sendStatus(200);
       } else {
         patients.insertOne({
+          email: email,
           doctor: req.session.user,
           measurements: {
             time: time,
@@ -56,6 +60,9 @@ router.get('/retrieve', (req, res) => {
   console.log('Retrieving measurements from: ' + email);
 
   client.connect(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
+    }
     const patients = client.db("cardiology").collection("patients");
 
     patients.findOne({ email: email }, (err, patient) => {
