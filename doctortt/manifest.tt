@@ -2,7 +2,7 @@ class @org.thingpedia.cardiologydoctor {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
-  monitorable list query measurements(req in email: String #_[prompt="Please enter the email of the patient for which you would like to retrieve measurements."],
+  monitorable list query measurements(in req email: String #_[prompt="Please enter the email of the patient for which you would like to retrieve measurements."],
                      out time: String,
                      out measurement: String)
   #_[canonical="get blood pressure records of a patient"]
