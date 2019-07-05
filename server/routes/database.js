@@ -18,29 +18,35 @@ router.post('/upload', (req, res) => {
   if (email === null || email.length < 1) {
     return res.status(400).json({ error: 'Email not found' });
   }
+
   console.log('Uploading data for patient: ' + email);
 
   client.connect(err => {
     if (err) {
       return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
     }
+
     const patients = client.db("cardiology").collection("patients");
     const users = client.db("cardiology").collection("users");
 
-    patients.findOne({ email: email }, (err, patient) => {
-      if (patient) {
-        if (doctor_email !== patient.doctor) {
-          return res.status(400).json({ error: "You don't have access to this patient's measurements" });
+    users.findOne({ email: doctor_email }, (err, user) => {
+      if (!user) {
+        return res.status(400).json({ error: "Doctor with this email doesn't exist" });
+      }
+
+      bcrypt.compare(doctor_password, user.hash, function (err, same_password) {
+        if (err) {
+          return res.status(500).json({ error: 'Error while hashing the password' });
         }
 
-        bcrypt.hash(doctor_password, 10, function (err, hash) {
-          if (err) {
-            return res.status(500).json({ error: 'Error while hashing the password' });
-          }
+        if (!same_password) {
+          return res.status(400).json({ error: "The password is incorrect" });
+        }
 
-          users.findOne({ email: doctor_email, hash: hash }, (err, user) => {
-            if (!user) {
-              return res.status(400).json({ error: "User with these credentials doesn't exist" });
+        patients.findOne({ email: email }, (err, patient) => {
+          if (patient) {
+            if (doctor_email !== patient.doctor) {
+              return res.status(400).json({ error: "You don't have access to this patient's measurements" });
             }
 
             patients.update(
@@ -49,19 +55,7 @@ router.post('/upload', (req, res) => {
             );
 
             res.sendStatus(200);
-          });
-        });
-      } else {
-        bcrypt.hash(doctor_password, 10, function (err, hash) {
-          if (err) {
-            return res.status(500).json({ error: 'Error while hashing the password' });
-          }
-
-          users.findOne({ email: doctor_email, hash: hash }, (err, user) => {
-            if (!user) {
-              return res.status(400).json({ error: "User with these credentials doesn't exist" });
-            }
-
+          } else {
             patients.insertOne({
               email: email,
               doctor: doctor_email,
@@ -72,9 +66,9 @@ router.post('/upload', (req, res) => {
             });
 
             res.sendStatus(200);
-          });
+          }
         });
-      }
+      });
     });
   });
 })
@@ -87,32 +81,38 @@ router.get('/retrieve', (req, res) => {
   if (email === null || email.length < 1) {
     return res.status(400).json({ error: 'Email not found' });
   }
+
   console.log('Retrieving measurements from: ' + email);
 
   client.connect(err => {
     if (err) {
       return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
     }
+
     const patients = client.db("cardiology").collection("patients");
     const users = client.db("cardiology").collection("users");
 
-    patients.findOne({ email: email }, (err, patient) => {
-      if (!patient) {
-        return res.status(400).json({ error: "There doesn't exist a patient with this email" });
+    users.findOne({ email: doctor_email }, (err, user) => {
+      if (!user) {
+        return res.status(400).json({ error: "Doctor with this email doesn't exist" });
       }
 
-      if (doctor_email !== patient.doctor) {
-        return res.status(400).json({ error: "You don't have access to this patient's measurements" });
-      }
-
-      bcrypt.hash(doctor_password, 10, function (err, hash) {
+      bcrypt.compare(doctor_password, user.hash, function (err, same_password) {
         if (err) {
           return res.status(500).json({ error: 'Error while hashing the password' });
         }
 
-        users.findOne({ email: doctor_email, hash: hash }, (err, user) => {
-          if (!user) {
-            return res.status(400).json({ error: "User with these credentials doesn't exist" });
+        if (!same_password) {
+          return res.status(400).json({ error: "The password is incorrect" });
+        }
+
+        patients.findOne({ email: email }, (err, patient) => {
+          if (!patient) {
+            return res.status(400).json({ error: "There doesn't exist a patient with this email" });
+          }
+
+          if (doctor_email !== patient.doctor) {
+            return res.status(400).json({ error: "You don't have access to this patient's measurements" });
           }
 
           return res.status(200).json({ measurements: patient.measurements });
