@@ -5,6 +5,5 @@
   "main": "device.js",
   "author": "Ricky Grannis-Vu",
   "dependencies": {
-    "https": "^1.0.0"
   }
 }
