@@ -9,16 +9,16 @@ const uri = "mongodb+srv://admin:cardiology@cardiology-rsnpi.mongodb.net/test?re
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 router.post('/signup', (req, res) => {
-  let email = req.body.email;
+  let username = req.body.username;
   let password = req.body.password;
 
-  if (email === null || email.length < 1) {
-    return res.status(400).json({ error: 'Email not found' });
+  if (username === null || username.length < 1) {
+    return res.status(400).json({ error: 'Username not found' });
   }
   if (password === null || password.length < 1) {
     return res.status(400).json({ error: 'Password not found' });
   }
-  console.log('Signing up: ' + email);
+  console.log('Signing up: ' + username);
 
   client.connect(err => {
     if (err) {
@@ -26,9 +26,9 @@ router.post('/signup', (req, res) => {
     }
     const users = client.db("cardiology").collection("users");
 
-    users.findOne({ email: email }, (err, user) => {
+    users.findOne({ username: username }, (err, user) => {
       if (user) {
-        return res.status(400).json({ error: 'Email already in use' });
+        return res.status(400).json({ error: 'Username already in use' });
       } else {
         bcrypt.hash(password, 10, function (err, hash) {
           if (err) {
@@ -36,7 +36,7 @@ router.post('/signup', (req, res) => {
           }
 
           users.insertOne({
-            email: email,
+            username: username,
             hash: hash
           });
 
