@@ -5,7 +5,7 @@ class @org.thingpedia.cardiology.patient {
   action remind()
   #_[canonical="remind the patient to record their blood pressure"]
   #_[confirmation="remind patient"]
-  #[doc="remind the patient to record their blood pressure"]
+  #[doc="remind the patient to record their blood pressure"];
 
   action record(in req measurement: String #_[prompt="Please enter your blood pressure recording."])
   #_[canonical="record the patient's blood pressure"]
