@@ -32,9 +32,9 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   }
 
   /*
-   * Retrieves the patient's blood pressure measurements from the database
+   * Returns a patient's blood pressure readings.
    */
-  get_measurements({ username }) {
+  get_readings({ username }) {
     let path = '/retrieve?username=' + username + '&doctor_username=' + this.state.username + '&doctor_password=' + this.state.password;
 
     return Tp.Helpers.Http.get("https://almond-cardiology.herokuapp.com" + path).then((result) => {
@@ -45,10 +45,10 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   }
 
   /*
-   * Retrieves the patient's critical blood pressure measurements from the database
+   * Returns a patient's critical blood pressure readings.
    */
-   async get_critical_measurements({ username, cutoff }) {
-     let measurements = await this.get_measurements({ username });
+   async get_critical_readings({ username, cutoff }) {
+     let measurements = await this.get_readings({ username });
 
      let critical_measurements = [];
      for (let i = 0; i < measurements.length; i++) {
@@ -62,25 +62,26 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
    }
 
    /*
-    * Returns whether or not the patient has any critical blood pressure readings.
+    * Returns whether or not a patient has any critical blood pressure readings.
     */
-   async get_are_critical_measurements({ username, cutoff }) {
-     let critical_measurements = await this.get_critical_measurements({ username, cutoff });
+   async get_are_critical_readings({ username, cutoff }) {
+     let critical_measurements = await this.get_critical_readings({ username, cutoff });
      return critical_measurements.length !== 0
    }
 
   /*
-   * Retrieves the number of blood pressure measurements from the database
+   * Returns the number of blood pressure readings that a patient has.
    */
-  get_count({ count }) {
-    let path = '/retrieve?username=' + username + '&doctor_email=' + this.state.username + '&doctor_password=' + this.state.password;
-
-    return Tp.Helpers.Http.get("https://almond-cardiology.herokuapp.com" + path).then((result) => {
-      return result.count();
-    }).then((count) => {
-        console.log('Sucessfully counted number of measurements');
-        return count;
-    });
+  get_number_readings({ username }) {
+    let measurements = await this.get_readings({ username });
+    return measurements.length;
   }
 
+  /*
+   * Returns the number of critical blood pressure readings that a patient has.
+   */
+  get_number_critical_readings({ username, cutoff }) {
+    let critical_measurements = await this.get_critical_readings({ username, cutoff });
+    return critical_measurements.length;
+  }
 };

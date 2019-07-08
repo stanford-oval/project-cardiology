@@ -2,29 +2,46 @@ class @org.thingpedia.cardiology.doctor {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
-  monitorable list query measurements(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
+  monitorable list query readings(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
                      out time: String,
                      out measurement: String)
   #_[canonical="get blood pressure readings"]
-  #_[confirmation="blood pressure readings"]
-  #[doc="Get a patient's blood pressure readings."]
+  #_[confirmation="readings"]
+  #[doc="Get all of the patient's blood pressure readings."]
   #[poll_interval=60min];
 
-  monitorable list query critical_measurements(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
+  monitorable list query critical_readings(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
                      in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
                      out time: String,
                      out measurement: String)
   #_[canonical="get critical blood pressure readings"]
-  #_[confirmation="critical blood pressure readings"]
-  #[doc="Get a patient's critical blood pressure readings."]
+  #_[confirmation="critical readings"]
+  #[doc="Get all of the patient's critical blood pressure readings."]
   #[poll_interval=60min];
 
-  monitorable query are_critical_measurements(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
+  monitorable query are_critical_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
                      in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
                      out time: String,
                      out measurement: String)
   #_[canonical="check for critical blood pressure readings"]
-  #_[confirmation="check for critical blood pressure readings"]
+  #_[confirmation="check for critical readings"]
   #[doc="Checks if a patient has any critical blood pressure readings."]
+  #[poll_interval=60min];
+
+  monitorable query number_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
+                     out time: String,
+                     out measurement: String)
+  #_[canonical="number of blood pressure readings"]
+  #_[confirmation="number of readings"]
+  #[doc="Get the number of blood pressure readings that a patient has."]
+  #[poll_interval=60min];
+
+  monitorable query number_critical_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
+                     in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
+                     out time: String,
+                     out measurement: String)
+  #_[canonical="number of critical blood pressure readings"]
+  #_[confirmation="number of critical readings"]
+  #[doc="Get the number of critical blood pressure readings that a patient has."]
   #[poll_interval=60min];
 }
