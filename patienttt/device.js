@@ -1,6 +1,7 @@
 "use strict";
 
 const Tp = require('thingpedia');
+const TT = require('thingtalk');
 
 let options = {
   dataContentType: "application/json"
@@ -29,6 +30,11 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
     }).catch(err => {
       console.error(err);
     });
+  }
+
+  async do_remind({}, env) {
+    const answer = await env.askQuestion(TT.Type.Measure('kPa'), "What is your blood pressure reading?");
+    this.do_record({ answer });
   }
 
   /*

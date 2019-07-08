@@ -1,4 +1,7 @@
 dataset @org.thingpedia.cardiology.patient {
+  action () := @org.thingpedia.cardiology.patient.remind()
+  #_[utterances=["record their blood pressure", "need to measure their blood pressure"]];
+
   action (p_measurement :String) := @org.thingpedia.cardiology.patient.record(measurement=p_measurement)
   #_[utterances=["record blood pressure of $p_measurement", "my blood pressure is $p_measurement"]];
 }
