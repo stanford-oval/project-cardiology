@@ -1,17 +1,9 @@
 "use strict";
 
 const Tp = require('thingpedia');
-const https = require('https');
 
-const options_upload = {
-  hostname: 'https://almond-cardiology.herokuapp.com',
-  path: '/upload',
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'X-Requested-With'
-  }
+let options = {
+  dataContentType: "application/json"
 };
 
 module.exports = class Cardiology_Patient extends Tp.BaseDevice {
@@ -41,16 +33,8 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
       measurement: measurement
     });
 
-    let req = https.request(options_upload, res => {
+    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/upload", data, options).then(() => {
       console.log('Successfully uploaded measurement to database');
     });
-
-    req.on('error', error => {
-      console.error(error);
-    })
-
-    req.write(data);
-
-    req.end();
   }
 };
