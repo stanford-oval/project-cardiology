@@ -72,7 +72,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   /*
    * Returns the number of blood pressure readings that a patient has.
    */
-  get_number_readings({ username }) {
+  async get_number_readings({ username }) {
     let measurements = await this.get_readings({ username });
     return measurements.length;
   }
@@ -80,7 +80,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   /*
    * Returns the number of critical blood pressure readings that a patient has.
    */
-  get_number_critical_readings({ username, cutoff }) {
+  async get_number_critical_readings({ username, cutoff }) {
     let critical_measurements = await this.get_critical_readings({ username, cutoff });
     return critical_measurements.length;
   }
