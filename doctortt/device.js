@@ -61,6 +61,14 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
      return critical_measurements;
    }
 
+   /*
+    * Returns whether or not the patient has any critical blood pressure readings.
+    */
+   async get_are_critical_measurements({ username, cutoff }) {
+     let critical_measurements = await this.get_critical_measurements({ username, cutoff });
+     return critical_measurements.length !== 0
+   }
+
   /*
    * Retrieves the number of blood pressure measurements from the database
    */

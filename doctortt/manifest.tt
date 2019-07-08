@@ -5,7 +5,7 @@ class @org.thingpedia.cardiology.doctor {
   monitorable list query measurements(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
                      out time: String,
                      out measurement: String)
-  #_[canonical="get a patient's blood pressure readings"]
+  #_[canonical="get blood pressure readings"]
   #_[confirmation="blood pressure readings"]
   #[doc="Get a patient's blood pressure readings."]
   #[poll_interval=60min];
@@ -14,8 +14,17 @@ class @org.thingpedia.cardiology.doctor {
                      in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
                      out time: String,
                      out measurement: String)
-  #_[canonical="get a patient's critical blood pressure readings"]
+  #_[canonical="get critical blood pressure readings"]
   #_[confirmation="critical blood pressure readings"]
   #[doc="Get a patient's critical blood pressure readings."]
+  #[poll_interval=60min];
+
+  monitorable query are_critical_measurements(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
+                     in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
+                     out time: String,
+                     out measurement: String)
+  #_[canonical="check for critical blood pressure readings"]
+  #_[confirmation="check for critical blood pressure readings"]
+  #[doc="Checks if a patient has any critical blood pressure readings."]
   #[poll_interval=60min];
 }
