@@ -2,11 +2,11 @@ class @org.thingpedia.cardiology.doctor {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
-  monitorable list query measurements(in req username: String #_[prompt="Please enter the username of the patient for which you would like to retrieve measurements."],
+  monitorable list query measurements(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
                      out time: String,
                      out measurement: String)
-  #_[canonical="get blood pressure records of a patient"]
-  #_[confirmation="blood pressure records"]
-  #[doc="get a patient's blood pressure measurements"]
+  #_[canonical="get a patient's blood pressure readings"]
+  #_[confirmation="blood pressure readings"]
+  #[doc="Get a patient's blood pressure readings."]
   #[poll_interval=60min];
 }

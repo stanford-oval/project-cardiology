@@ -3,12 +3,12 @@ class @org.thingpedia.cardiology.patient {
   import config from @org.thingpedia.config.basic_auth(extra_params=makeArgMap(username_of_the_doctor_you_would_like_to_receive_your_measurements:String));
 
   action remind()
-  #_[canonical="remind the patient to record their blood pressure"]
-  #_[confirmation="remind patient"]
-  #[doc="remind the patient to record their blood pressure"];
+  #_[canonical="set a reminder to record your blood pressure"]
+  #_[confirmation="set reminder"]
+  #[doc="This function is called by your doctor's Almond assistant. Reminds you to record your blood pressure."];
 
-  action record(in req measurement: String #_[prompt="Please enter your blood pressure recording."])
-  #_[canonical="record the patient's blood pressure"]
-  #_[confirmation="record blood pressure"]
-  #[doc="allows the patient to upload their blood pressure measurements for their doctor"];
+  action record(in req measurement: String #_[prompt="Please enter your blood pressure reading."])
+  #_[canonical="record your blood pressure reading"]
+  #_[confirmation="record reading"]
+  #[doc="Uploads your blood pressure reading to your doctor's database."];
 }

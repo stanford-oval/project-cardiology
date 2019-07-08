@@ -1,4 +1,4 @@
 dataset @org.thingpedia.cardiology.doctor {
   query (p_username :String) := @org.thingpedia.cardiology.doctor.measurements(username=p_username)
-  #_[utterances=["blood pressure records of $p_username", "blood pressure measurements of $p_username"]];
+  #_[utterances=["blood pressure readings of $p_username", "$p_username blood pressure readings"]];
 }
