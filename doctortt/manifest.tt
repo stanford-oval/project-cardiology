@@ -44,4 +44,7 @@ class @org.thingpedia.cardiology.doctor {
   #_[confirmation="number of critical readings"]
   #[doc="Get the number of critical blood pressure readings that a patient has."]
   #[poll_interval=60min];
+
+  query (p_count :Number)  := @org.thingpedia.cardiology.doctor.count(count=p_count)
+  #_[utterances=["${p_count:const} of blood measurements"]];
 }
