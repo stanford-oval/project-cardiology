@@ -8,18 +8,18 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
 
     this.name = "Cardiology_Doctor Account for " + this.state.username;
     this.description = "This is your Cardiology Doctor Account. You can use it"
-      + " to remind patients to track their blood pressure regularly.";
+      + " to automatically remind patients to measure their blood pressure.";
 
     /* Stores the doctor's credentials in our database */
     let path = '/signup?username=' + this.state.username + '&password=' + this.state.password;
     Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com" + path).then(response => {
       if (!response.ok()) {
         response.json().then(json => {
-          console.err(json.error);
+          console.error(json.error);
         });
       }
     }).catch(err => {
-      console.err(err);
+      console.error(err);
     });
   }
 
@@ -35,7 +35,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
       console.log('Successfully retrieved measurements from database');
       return measurements;
     }).catch(err => {
-      console.err(err);
+      console.error(err);
     });
   }
 

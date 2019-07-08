@@ -19,11 +19,11 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
     Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com" + path).then(response => {
       if (!response.ok()) {
         response.json().then(json => {
-          console.err(json.error);
+          console.error(json.error);
         });
       }
     }).catch(err => {
-      console.err(err);
+      console.error(err);
     });
   }
 
@@ -34,7 +34,7 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
     let data = JSON.stringify({
       username: this.state.username,
       password: this.state.password,
-      doctor_username: this.state.doctor_username,
+      doctor_username: this.state.username_of_the_doctor_you_would_like_to_receive_your_measurements,
       time: new Date(),
       measurement: measurement
     });
@@ -42,7 +42,7 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
     Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/upload", data, options).then(() => {
       console.log('Successfully uploaded measurement to database');
     }).catch(err => {
-      console.err(err);
+      console.error(err);
     });
   }
 };
