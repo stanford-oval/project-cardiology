@@ -2,6 +2,10 @@
 
 const Tp = require('thingpedia');
 
+let options = {
+  dataContentType: "application/json"
+};
+
 module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   constructor(engine, state) {
     super(engine, state);
@@ -11,8 +15,12 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
       + " to automatically remind patients to measure their blood pressure.";
 
     /* Stores the doctor's credentials in our database */
-    let path = '/signup?username=' + this.state.username + '&password=' + this.state.password;
-    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com" + path).then(response => {
+    let data = JSON.stringify({
+      username: this.state.username,
+      password: this.state.password
+    });
+
+    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/signup", data, options).then(response => {
       if (!response.ok()) {
         response.json().then(json => {
           console.error(json.error);

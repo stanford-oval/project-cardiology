@@ -15,8 +15,12 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
       + " to upload your blood pressure recordings for your doctor.";
 
     /* Stores the patient's credentials in our database */
-    let path = '/signup?username=' + this.state.username + '&password=' + this.state.password;
-    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com" + path).then(response => {
+    let data = JSON.stringify({
+      username: this.state.username,
+      password: this.state.password
+    });
+
+    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/signup", data, options).then(response => {
       if (!response.ok()) {
         response.json().then(json => {
           console.error(json.error);
@@ -39,8 +43,12 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
       measurement: measurement
     });
 
-    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/upload", data, options).then(() => {
-      console.log('Successfully uploaded measurement to database');
+    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/upload", data, options).then(response => {
+      if (!response.ok()) {
+        response.json().then(json => {
+          console.error(json.error);
+        });
+      }
     }).catch(err => {
       console.error(err);
     });
