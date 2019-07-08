@@ -39,6 +39,8 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
 
     return Tp.Helpers.Http.get("https://almond-cardiology.herokuapp.com" + path).then((result) => {
       return JSON.parse(result.toString());
+    }).then(reading => {
+      return reading;
     }).catch(err => {
       console.error(err);
     });
