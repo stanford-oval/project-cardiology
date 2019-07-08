@@ -32,23 +32,37 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   }
 
   /*
-   * Retrieves the patient's blood pressure measurements from the databse
+   * Retrieves the patient's blood pressure measurements from the database
    */
   get_measurements({ username }) {
     let path = '/retrieve?username=' + username + '&doctor_username=' + this.state.username + '&doctor_password=' + this.state.password;
 
     return Tp.Helpers.Http.get("https://almond-cardiology.herokuapp.com" + path).then((result) => {
       return JSON.parse(result.toString());
-    }).then((measurements) => {
-      console.log('Successfully retrieved measurements from database');
-      return measurements;
     }).catch(err => {
       console.error(err);
     });
   }
 
   /*
-   * Retrieves the number of blood pressure measurements from the databse
+   * Retrieves the patient's critical blood pressure measurements from the database
+   */
+   async get_critical_measurements({ username, cutoff }) {
+     let measurements = await this.get_measurements({ username });
+
+     let critical_measurements = [];
+     for (let i = 0; i < measurements.length; i++) {
+       let reading = measurements[i].measurement;
+       if (reading >= cutoff) {
+         critical_measurements.push(measurements[i]);
+       }
+     }
+
+     return critical_measurements;
+   }
+
+  /*
+   * Retrieves the number of blood pressure measurements from the database
    */
   get_count({ count }) {
     let path = '/retrieve?username=' + username + '&doctor_email=' + this.state.username + '&doctor_password=' + this.state.password;

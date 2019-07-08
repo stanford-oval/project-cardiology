@@ -1,4 +1,7 @@
 dataset @org.thingpedia.cardiology.doctor {
   query (p_username :String) := @org.thingpedia.cardiology.doctor.measurements(username=p_username)
   #_[utterances=["blood pressure readings of $p_username", "$p_username blood pressure readings"]];
+
+  query (p_username :String, p_cutoff :Number) := @org.thingpedia.cardiology.doctor.critical_measurements(username=p_username, cutoff=p_cutoff)
+  #_[utterances=["critical blood pressure readings of $p_username", "$p_username critical blood pressure readings"]];
 }

@@ -9,4 +9,13 @@ class @org.thingpedia.cardiology.doctor {
   #_[confirmation="blood pressure readings"]
   #[doc="Get a patient's blood pressure readings."]
   #[poll_interval=60min];
+
+  monitorable list query critical_measurements(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
+                     in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
+                     out time: String,
+                     out measurement: String)
+  #_[canonical="get a patient's critical blood pressure readings"]
+  #_[confirmation="critical blood pressure readings"]
+  #[doc="Get a patient's critical blood pressure readings."]
+  #[poll_interval=60min];
 }
