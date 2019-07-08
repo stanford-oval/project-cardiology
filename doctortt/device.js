@@ -29,4 +29,19 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
       return measurements;
     });
   }
+
+  /*
+   * Retrieves the number of blood pressure measurements from the databse
+   */
+  get_count({ count }) {
+    let path = '/retrieve?email=' + email + '&doctor_email=' + this._doctor_email + '&doctor_password=' + this._doctor_password;
+
+    return Tp.Helpers.Http.get("https://almond-cardiology.herokuapp.com" + path).then((result) => {
+      return result.count();
+    }).then((count) => {
+        console.log('Sucessfully counted number of measurements');
+        return count;
+    });
+  }
+  
 };
