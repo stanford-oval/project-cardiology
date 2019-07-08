@@ -56,6 +56,9 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
        if (reading >= cutoff) {
          critical_measurements.push(measurements[i]);
        }
+       else {
+         console.log('No critical measurements exceeds cutoff')
+       }
      }
 
      return critical_measurements;
