@@ -3,14 +3,14 @@ dataset @org.thingpedia.cardiology.doctor {
   #_[utterances=["blood pressure readings of $p_username", "$p_username blood pressure readings"]];
 
   query (p_username :String, p_cutoff :Number) := @org.thingpedia.cardiology.doctor.critical_readings(username=p_username, cutoff=p_cutoff)
-  #_[utterances=["critical blood pressure readings of $p_username", "$p_username critical blood pressure readings"]];
+  #_[utterances=["blood pressure readings above $p_cutoff of $p_username", "$p_username blood pressure readings above $p_cutoff"]];
 
   query (p_username :String, p_cutoff :Number) := @org.thingpedia.cardiology.doctor.are_critical_readings(username=p_username, cutoff=p_cutoff)
-  #_[utterances=["does $p_username have any critical blood pressure readings", "$p_username are there any critical blood pressure readings"]];
+  #_[utterances=["does $p_username have any blood pressure readings above $p_cutoff", "$p_username are there any blood pressure readings above $p_cutoff"]];
 
   query (p_username :String) := @org.thingpedia.cardiology.doctor.number_readings(username=p_username)
   #_[utterances=["how many blood pressure readings does $p_username have", "$p_username how many blood pressure readings"]];
 
   query (p_username :String, p_cutoff :Number) := @org.thingpedia.cardiology.doctor.number_critical_readings(username=p_username, cutoff=p_cutoff)
-  #_[utterances=["how many critical blood pressure readings does $p_username have", "$p_username how many critical blood pressure readings"]];
+  #_[utterances=["how many blood pressure readings above $p_cutoff does $p_username have", "$p_username how many blood pressure readings above $p_cutoff"]];
 }
