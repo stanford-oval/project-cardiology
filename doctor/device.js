@@ -20,13 +20,8 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
       password: this.state.password
     });
 
-    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/signup", data, options).then(response => {
-      if (!response.ok()) {
-        response.json().then(json => {
-          console.error(json.error);
-        });
-      }
-    }).catch(err => {
+    Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/signup", data, options)
+    .catch(err => {
       console.error(err);
     });
   }
@@ -43,6 +38,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
       return reading;
     }).catch(err => {
       console.error(err);
+      return [];
     });
   }
 
@@ -57,9 +53,8 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
        let reading = measurements[i].measurement;
        if (reading >= cutoff) {
          critical_measurements.push(measurements[i]);
-       }
-       else {
-         console.log('No critical measurements exceeds cutoff')
+       } else {
+         console.log('No critical measurements exceed the cutoff')
        }
      }
 
