@@ -28,9 +28,9 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
   }
 
   async do_remind({}, env) {
-    const answer = await env.askQuestion(TT.Type.Measure('kPa'), "What is your systolic blood pressure reading?");
-    const answer = await env.askQuestion(TT.Type.Measure('kPa'), "What is your diastolic blood pressure reading?");
-    this.do_record({ answer });
+    const systolic = await env.askQuestion(TT.Type.Measure('kPa'), "What is your systolic blood pressure reading?");
+    const diastolic = await env.askQuestion(TT.Type.Measure('kPa'), "What is your diastolic blood pressure reading?");
+    this.do_record({ systolic, diastolic });
   }
 
   /*

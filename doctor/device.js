@@ -1,6 +1,9 @@
 "use strict";
 
 const Tp = require('thingpedia');
+const TT = require('thingtalk');
+const uuid = require('uuid');
+const crypto = require('crypto');
 
 let options = {
   dataContentType: "application/json"
@@ -24,6 +27,56 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
     .catch(err => {
       console.error(err);
     });
+  }
+
+  _findPrimaryIdentity(identities) {
+      var other = null;
+      var email = null;
+      var phone = null;
+      for (var i = 0; i < identities.length; i++) {
+          var id = identities[i];
+          if (id.startsWith('email:')) {
+              if (email === null)
+                  email = id;
+          } else if (id.startsWith('phone:')) {
+              if (phone === null)
+                  phone = id;
+          } else {
+              if (other === null)
+                  other = id;
+          }
+      }
+      if (phone !== null)
+          return phone;
+      if (email !== null)
+          return email;
+      if (other !== null)
+          return other;
+      return null;
+  }
+
+  /*
+   * Add a patient
+   */
+  async do_add_patient({ email }) {
+    const key = crypto.randomBytes(16).toString("hex");
+
+    // TODO: database call
+
+    const identities = this.engine.messaging.getIdentities();
+    const identity = this._findPrimaryIdentity(identities);
+
+    const principal = await engine.messaging.getAccountForIdentity("email:" + email);
+    if (!principal)
+      throw new Error("This patient does not have a Matrix account");
+
+    const code = `now => @org.thingpedia.cardiology.public.configure_patient(
+      key="${key}"
+    );`
+    const program = TT.Grammar.parse(code);
+
+    const uniqueId = 'uuid-' + uuid.v4();
+    await engine.remote.installProgramRemote(principal, identity, uniqueId, program);
   }
 
   /*
