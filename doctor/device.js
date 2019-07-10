@@ -1,6 +1,9 @@
 "use strict";
 
 const Tp = require('thingpedia');
+const TT = require('thingtalk');
+const uuid = require('uuid');
+const crypto = require('crypto');
 
 let options = {
   dataContentType: "application/json"
@@ -70,7 +73,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
     const code = `now => @org.thingpedia.cardiology.public.configure_patient(
       key="${key}"
     );`
-    const program = ThingTalk.Grammar.parse(code);
+    const program = TT.Grammar.parse(code);
 
     const uniqueId = 'uuid-' + uuid.v4();
     await engine.remote.installProgramRemote(principal, identity, uniqueId, program);

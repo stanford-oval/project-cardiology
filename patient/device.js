@@ -2,8 +2,6 @@
 
 const Tp = require('thingpedia');
 const TT = require('thingtalk');
-const uuid = require('uuid');
-const crypto = require('crypto');
 
 let options = {
   dataContentType: "application/json"
