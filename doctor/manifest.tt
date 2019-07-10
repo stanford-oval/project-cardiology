@@ -20,7 +20,8 @@ class @org.thingpedia.cardiology.doctor {
   #[poll_interval=60min];
 
   monitorable query are_critical_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
-                     in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
+                     in req systolic_cutoff: Number #_[prompt="What's the lowest systolic blood pressure reading that you consider critical?"],
+                     in req diastolic_cutoff: Number #_[prompt="What's the lowest diastolic blood pressure reading that you consider critical?"],
                      out answer: Boolean)
   #_[canonical="check for critical blood pressure readings"]
   #_[confirmation="check for critical readings"]
