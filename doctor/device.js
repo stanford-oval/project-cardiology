@@ -54,7 +54,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
        if (reading >= cutoff) {
          critical_measurements.push(measurements[i]);
        } else {
-         console.log('No critical measurements exceed the cutoff')
+         console.log('No critical measurements exceed the cutoff');
        }
      }
 
@@ -66,7 +66,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
     */
    async get_are_critical_readings({ username, cutoff }) {
      let critical_measurements = await this.get_critical_readings({ username, cutoff });
-     return critical_measurements.length !== 0
+     return [{ answer: critical_measurements.length !== 0 }];
    }
 
   /*
@@ -74,7 +74,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
    */
   async get_number_readings({ username }) {
     let measurements = await this.get_readings({ username });
-    return measurements.length;
+    return [{ number: measurements.length }];
   }
 
   /*
@@ -82,6 +82,6 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
    */
   async get_number_critical_readings({ username, cutoff }) {
     let critical_measurements = await this.get_critical_readings({ username, cutoff });
-    return critical_measurements.length;
+    return [{ number: critical_measurements.length }];
   }
 };
