@@ -28,20 +28,22 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
   }
 
   async do_remind({}, env) {
-    const answer = await env.askQuestion(TT.Type.Measure('kPa'), "What is your blood pressure reading?");
+    const answer = await env.askQuestion(TT.Type.Measure('kPa'), "What is your systolic blood pressure reading?");
+    const answer = await env.askQuestion(TT.Type.Measure('kPa'), "What is your diastolic blood pressure reading?");
     this.do_record({ answer });
   }
 
   /*
    * Uploads the patient's blood pressure measurements to the database
    */
-  do_record({ measurement }) {
+  do_record({ systolic, diastolic }) {
     let data = JSON.stringify({
       username: this.state.username,
       password: this.state.password,
       doctor_username: this.state.username_of_the_doctor_you_would_like_to_receive_your_measurements,
       time: new Date(),
-      measurement: measurement
+      systolic: systolic,
+      diastolic: diastolic
     });
 
     Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/upload", data, options)

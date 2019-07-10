@@ -7,7 +7,8 @@ class @org.thingpedia.cardiology.patient {
   #_[confirmation="set reminder"]
   #[doc="This function is called by your doctor's Almond assistant. Reminds you to record your blood pressure."];
 
-  action record(in req measurement: String #_[prompt="Please enter your blood pressure reading."])
+  action record(in req systolic: String #_[prompt="Please enter your systolic blood pressure reading."],
+                in req diastolic: String #_[prompt="Please enter your diastolic blood pressure reading."])
   #_[canonical="record your blood pressure reading"]
   #_[confirmation="record reading"]
   #[doc="Uploads your blood pressure reading to your doctor's database."];
