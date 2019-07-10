@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Cardiology project for the Almond team",
   "scripts": {
-    "build": "npm run buildDoctor && npm run buildPatient",
+    "build": "npm run buildDoctor && npm run buildPatient && npm run buildPublic",
     "buildDoctor": "npm run copyDoctor && npm run zipDoctor && npm run cleanDoctor",
     "copyDoctor": "mkdir doctor_zip && cp doctor/device.js doctor_zip/ && cp doctor/package.json doctor_zip/",
     "zipDoctor": "cd doctor_zip && zip -r ../doctor.zip * && cd ..",
@@ -11,7 +11,11 @@
     "buildPatient": "npm run copyPatient && npm run zipPatient && npm run cleanPatient",
     "copyPatient": "mkdir patient_zip && cp patient/device.js patient_zip/ && cp patient/package.json patient_zip/",
     "zipPatient": "cd patient_zip && zip -r ../patient.zip * && cd ..",
-    "cleanPatient": "rm -r patient_zip"
+    "cleanPatient": "rm -r patient_zip",
+    "buildPublic": "npm run copyPublic && npm run zipPublic && npm run cleanPublic",
+    "copyPublic": "mkdir public_zip && cp public/device.js public_zip/ && cp public/package.json public_zip/",
+    "zipPublic": "cd public_zip && zip -r ../public.zip * && cd ..",
+    "cleanPublic": "rm -r public_zip"
   },
   "author": "Ricky Grannis-Vu, Elvis Zhang"
 }

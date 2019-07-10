@@ -27,6 +27,30 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   }
 
   /*
+   * Add a patient
+   */
+  async do_add_patient({ email }) {
+    const key = crypto.randomBytes(16).toString("hex");
+
+    // TODO: database call
+
+    const identities = this.engine.messaging.getIdentities();
+    const identity = this._findPrimaryIdentity(identities);
+
+    const principal = await engine.messaging.getAccountForIdentity("email:" + email);
+    if (!principal)
+      throw new Error("This patient does not have a Matrix account");
+
+    const code = `now => @org.thingpedia.cardiology.public.configure_patient(
+      key="${key}"
+    );`
+    const program = ThingTalk.Grammar.parse(code);
+
+    const uniqueId = 'uuid-' + uuid.v4();
+    await engine.remote.installProgramRemote(principal, identity, uniqueId, program);
+  }
+
+  /*
    * Returns a patient's blood pressure readings.
    */
   get_readings({ username }) {

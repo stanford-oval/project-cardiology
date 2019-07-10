@@ -1,0 +1,8 @@
+class @org.thingpedia.cardiology.public {
+    import loader from @org.thingpedia.v2();
+
+    action add_patient()
+    #_[canonical="add patient"]
+    #_[confirmation="add patient"]
+    #[doc="Adds a patient. This is only called internally, by the Cardiology project."];
+}
