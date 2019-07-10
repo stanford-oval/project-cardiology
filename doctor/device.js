@@ -103,8 +103,9 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
 
      let critical_measurements = [];
      for (let i = 0; i < measurements.length; i++) {
-       let reading = measurements[i].measurement;
-       if (reading >= cutoff) {
+       let systolic = measurements[i].systolic;
+       let diastolic = measurements[i].diastolic;
+       if (systolic >= systolic_cutoff) || (diastolic >= diastolic_cutoff) {
          critical_measurements.push(measurements[i]);
        } else {
          console.log('No critical measurements exceed the cutoff');
