@@ -29,32 +29,6 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
     });
   }
 
-  _findPrimaryIdentity(identities) {
-      var other = null;
-      var email = null;
-      var phone = null;
-      for (var i = 0; i < identities.length; i++) {
-          var id = identities[i];
-          if (id.startsWith('email:')) {
-              if (email === null)
-                  email = id;
-          } else if (id.startsWith('phone:')) {
-              if (phone === null)
-                  phone = id;
-          } else {
-              if (other === null)
-                  other = id;
-          }
-      }
-      if (phone !== null)
-          return phone;
-      if (email !== null)
-          return email;
-      if (other !== null)
-          return other;
-      return null;
-  }
-
   async do_remind({}, env) {
     const systolic = await env.askQuestion(TT.Type.Measure('kPa'), "What is your systolic blood pressure reading?");
     const diastolic = await env.askQuestion(TT.Type.Measure('kPa'), "What is your diastolic blood pressure reading?");
