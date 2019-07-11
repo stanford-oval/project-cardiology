@@ -9,11 +9,11 @@ const uri = "mongodb+srv://admin:cardiology@cardiology-rsnpi.mongodb.net/test?re
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 router.post('/upload', (req, res) => {
-  let doctor_username = req.body.doctor_username;
   let username = req.body.username;
   let password = req.body.password;
   let time = req.body.time;
-  let measurement = req.body.measurement;
+  let systolic = req.body.systolic;
+  let diastolic = req.body.diastolic;
 
   if (username === null || username.length < 1) {
     return res.status(400).json({ error: 'Username not found' });
@@ -46,17 +46,17 @@ router.post('/upload', (req, res) => {
           if (patient) {
             patients.update(
               { "_id" : patient._id  },
-              { "$addToSet" : { "measurements" : { "time": time, "measurement": measurement } } }
+              { "$addToSet" : { "measurements" : { "time": time, "systolic": systolic, "diastolic": diastolic } } }
             );
 
             res.sendStatus(200);
           } else {
             patients.insertOne({
               username: username,
-              doctor: doctor_username,
               measurements: [{
                 time: time,
-                measurement: measurement
+                systolic: systolic,
+                diastolic: diastolic
               }]
             });
 
