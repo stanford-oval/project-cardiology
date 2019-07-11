@@ -1,12 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt');
-
-// WARNING: Need to change admin account's password before production.
-// This is important since password is on GitHub in a public repo.
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://admin:cardiology@cardiology-rsnpi.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+var connection = require('../database');
 
 router.post('/signup', (req, res) => {
   let username = req.body.username;
@@ -20,29 +15,25 @@ router.post('/signup', (req, res) => {
   }
   console.log('Signing up: ' + username);
 
-  client.connect(err => {
+  connection.query(`SELECT * FROM users WHERE username = '${username}'`, function (err, result, fields) {
     if (err) {
-      return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
+      return res.status(500).json({ error: 'Error while retrieving data from table' });
     }
-    const users = client.db("cardiology").collection("users");
+    if (result.length !== 0) {
+      return res.status(400).json({ error: 'Username already in use' });
+    }
 
-    users.findOne({ username: username }, (err, user) => {
-      if (user) {
-        return res.status(400).json({ error: 'Username already in use' });
-      } else {
-        bcrypt.hash(password, 10, function (err, hash) {
-          if (err) {
-            return res.status(500).json({ error: 'Error while hashing the password' });
-          }
-
-          users.insertOne({
-            username: username,
-            hash: hash
-          });
-
-          res.sendStatus(200);
-        });
+    bcrypt.hash(password, 10, function (err, hash) {
+      if (err) {
+        return res.status(500).json({ error: 'Error while hashing the password' });
       }
+
+      connection.query(`INSERT INTO users (username, hash) VALUES ('${username}', '${hash}')`, function (err, result) {
+        if (err) {
+          return res.status(500).json({ error: 'Error while inserting into table' });
+        }
+        res.sendStatus(200);
+      });
     });
   });
 })
