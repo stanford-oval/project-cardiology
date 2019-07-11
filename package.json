@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run buildDoctor && npm run buildPatient",
     "buildDoctor": "npm run copyDoctor && npm run zipDoctor && npm run cleanDoctor",
-    "copyDoctor": "mkdir doctor_zip && cp doctor/device.js doctor_zip/ && cp doctor/package.json doctor_zip/",
+    "copyDoctor": "mkdir doctor_zip && cp doctor/device.js doctor_zip/ && cp doctor/package.json doctor_zip/ && cp doctor/package-lock.json doctor_zip/ && cp -R doctor/node_modules doctor_zip/",
     "zipDoctor": "cd doctor_zip && zip -r ../doctor.zip * && cd ..",
     "cleanDoctor": "rm -r doctor_zip",
     "buildPatient": "npm run copyPatient && npm run zipPatient && npm run cleanPatient",

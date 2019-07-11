@@ -64,7 +64,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
     const identities = this.engine.messaging.getIdentities();
     const identity = this._findPrimaryIdentity(identities);
 
-    const principal = await engine.messaging.getAccountForIdentity("email:" + email);
+    const principal = await this.engine.messaging.getAccountForIdentity("email:" + email);
     if (!principal)
       throw new Error("This patient does not have a Matrix account");
 
@@ -74,7 +74,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
     const program = TT.Grammar.parse(code);
 
     const uniqueId = 'uuid-' + uuid.v4();
-    await engine.remote.installProgramRemote(principal, identity, uniqueId, program);
+    await this.engine.remote.installProgramRemote(principal, identity, uniqueId, program);
   }
 
   /*
@@ -103,7 +103,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
      for (let i = 0; i < measurements.length; i++) {
        let systolic = measurements[i].systolic;
        let diastolic = measurements[i].diastolic;
-       if (systolic >= systolic_cutoff) || (diastolic >= diastolic_cutoff) {
+       if (systolic >= systolic_cutoff || diastolic >= diastolic_cutoff) {
          critical_measurements.push(measurements[i]);
        } else {
          console.log('No critical measurements exceed either cutoff.');
