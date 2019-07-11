@@ -62,7 +62,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
     const key = crypto.randomBytes(16).toString("hex");
 
     await Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/signup", JSON.stringify({
-      username: email,
+      username: email.value,
       password: key
     }), { dataContentType: 'application/json' });
 

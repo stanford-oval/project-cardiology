@@ -11,7 +11,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 router.post('/upload', (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  let time = req.body.time;
+  let time = new Date();
   let systolic = req.body.systolic;
   let diastolic = req.body.diastolic;
 
@@ -103,10 +103,6 @@ router.get('/retrieve', (req, res) => {
         patients.findOne({ username: username }, (err, patient) => {
           if (!patient) {
             return res.status(400).json({ error: "There doesn't exist a patient with this username" });
-          }
-
-          if (doctor_username !== patient.doctor) {
-            return res.status(400).json({ error: "You don't have access to this patient's measurements" });
           }
 
           return res.status(200).json(patient.measurements);
