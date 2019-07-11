@@ -1,0 +1,7 @@
+class @org.thingpedia.cardiology.patient.config {
+    import loader from @org.thingpedia.v2();
+
+    action configure_patient(in req email : EmailAddress,
+                             in req key : String)
+    #_[confirmation="configure your patient account with email ${email}"];
+}

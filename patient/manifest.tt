@@ -1,19 +1,9 @@
 class @org.thingpedia.cardiology.patient {
   import loader from @org.thingpedia.v2();
+  import config from @org.thingpedia.config.builtin();
 
-  action configure_patient(in req email: String #_[prompt="Enter the email"],
-                           in req key: String #_[prompt="Enter the key"])
-  #_[canonical="configure patient"]
-  #_[confirmation="configure patient"]
-  #[doc="Configures a patient. This is only called internally, by the Cardiology project."];
-
-  action remind()
-  #_[canonical="set a reminder to record your blood pressure"]
-  #_[confirmation="set reminder"]
-  #[doc="This function is called by your doctor's Almond assistant. Reminds you to record your blood pressure."];
-
-  action record(in req systolic: String #_[prompt="Please enter your systolic blood pressure reading."],
-                in req diastolic: String #_[prompt="Please enter your diastolic blood pressure reading."])
+  action record(in opt systolic: Measure(Pa) #_[prompt="Please enter your systolic blood pressure reading."],
+                in opt diastolic: Measure(Pa) #_[prompt="Please enter your diastolic blood pressure reading."])
   #_[canonical="record your blood pressure reading"]
   #_[confirmation="record reading"]
   #[doc="Uploads your blood pressure reading to your doctor's database."];

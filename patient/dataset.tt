@@ -1,4 +1,11 @@
-dataset @org.thingpedia.cardiology.patient {
-  action (p_systolic :String, p_diastolic :String) := @org.thingpedia.cardiology.patient.record(systolic=p_systolic, diastolic=p_diastolic)
-  #_[utterances=["record blood pressure of $p_systolic / $p_diastolic", "my blood pressure is $p_systolic / $p_diastolic"]];
+dataset @org.thingpedia.cardiology.patient language "en" {
+    action (p_systolic :Measure(Pa), p_diastolic :Measure(Pa))  := @org.thingpedia.cardiology.patient.record(systolic=p_systolic, diastolic=p_diastolic)
+    #_[utterances=["record blood pressure of $p_systolic / $p_diastolic",
+                   "my blood pressure is $p_systolic / $p_diastolic"]]
+    #[id=34553078];
+
+    action  := @org.thingpedia.cardiology.patient.record()
+    #_[utterances=["record my blood pressure"]]
+    #[id=34553080];
+
 }

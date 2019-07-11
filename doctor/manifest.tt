@@ -2,58 +2,19 @@ class @org.thingpedia.cardiology.doctor {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
-  action add_patient(in req email: String #_[prompt="Enter the email of the patient you would like to add to the system."])
+  action add_patient(in req email: EmailAddress #_[prompt="Enter the email of the patient you would like to add to the system."])
   #_[canonical="add patient"]
   #_[confirmation="add patient"]
   #[doc="Add a patient to the Cardiology system."];
 
-  monitorable list query readings(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
-                     out time: String,
+  monitorable list query readings(
+                     out username: EmailAddress #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
+                     out time: Date,
                      out systolic: Measure(mmHg),
                      out diastolic: Measure(mmHg))
   #_[canonical="blood pressure readings"]
   #_[confirmation="readings"]
-  #_[formatted=[{type="text",text="At time ${time}, the patient's blood pressure was ${systolic}/${diastolic}"}]]
+  #_[formatted=[{type="text",text="At time ${time}, ${username}'s blood pressure was ${systolic:mmHg}/${diastolic:mmHg}"}]]
   #[doc="Get all of the patient's blood pressure readings."]
-  #[poll_interval=60min];
-
-  monitorable list query critical_readings(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
-                     in req systolic_cutoff: Number #_[prompt="What's the lowest systolic blood pressure reading that you consider critical?"],
-                     in req diastolic_cutoff: Number #_[prompt="What's the lowest diastolic blood pressure reading that you consider critical?"],
-                     out time: String,
-                     out systolic: Measure(mmHg),
-                     out diastolic: Measure(mmHg))
-  #_[canonical="get critical blood pressure readings"]
-  #_[confirmation="critical readings"]
-  #_[formatted=[{type="text",text="At time ${time}, the patient's blood pressure was ${systolic}/${diastolic}"}]]
-  #[doc="Get all of the patient's critical blood pressure readings."]
-  #[poll_interval=60min];
-
-  monitorable query are_critical_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
-                     in req systolic_cutoff: Number #_[prompt="What's the lowest systolic blood pressure reading that you consider critical?"],
-                     in req diastolic_cutoff: Number #_[prompt="What's the lowest diastolic blood pressure reading that you consider critical?"],
-                     out answer: Boolean)
-  #_[canonical="check for critical blood pressure readings"]
-  #_[confirmation="check for critical readings"]
-  #_[formatted=[{type="text",text="The patient has a critical blood reading. Better check up on them!"}]]
-  #[doc="Checks if a patient has any critical blood pressure readings."]
-  #[poll_interval=60min];
-
-  monitorable query number_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
-                     out number: Number)
-  #_[canonical="number of blood pressure readings"]
-  #_[confirmation="number of readings"]
-  #_[formatted=[{type="text",text="The patient has ${number} blood pressure readings."}]]
-  #[doc="Get the number of blood pressure readings that a patient has."]
-  #[poll_interval=60min];
-
-  monitorable query number_critical_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
-                     in req systolic_cutoff: Number #_[prompt="What's the lowest systolic blood pressure reading that you consider critical?"],
-                     in req diastolic_cutoff: Number #_[prompt="What's the lowest diastolic blood pressure reading that you consider critical?"],
-                     out number: Number)
-  #_[canonical="number of critical blood pressure readings"]
-  #_[confirmation="number of critical readings"]
-  #_[formatted=[{type="text",text="The patient has ${number} critical blood pressure readings. Better check up on them!"}]]
-  #[doc="Get the number of critical blood pressure readings that a patient has."]
   #[poll_interval=60min];
 }
