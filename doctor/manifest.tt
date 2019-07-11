@@ -2,6 +2,11 @@ class @org.thingpedia.cardiology.doctor {
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
+  action add_patient(in req email: String #_[prompt="Enter the email of the patient you would like to add to the system."])
+  #_[canonical="add patient"]
+  #_[confirmation="add patient"]
+  #[doc="Add a patient to the Cardiology system."];
+
   monitorable list query readings(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
                      out time: String,
                      out systolic: Measure('mmHg'),

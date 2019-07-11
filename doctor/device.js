@@ -71,7 +71,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
       throw new Error("This patient does not have a Matrix account");
 
     const code = `now => @org.thingpedia.cardiology.public.configure_patient(
-      key="${key}"
+      email="${email}", key="${key}"
     );`
     const program = TT.Grammar.parse(code);
 
