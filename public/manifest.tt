@@ -1,9 +1,0 @@
-class @org.thingpedia.cardiology.public {
-    import loader from @org.thingpedia.v2();
-
-    action configure_patient(in req email: String #_[prompt="Enter the email"],
-                             in req key: String #_[prompt="Enter the key"])
-    #_[canonical="configure patient"]
-    #_[confirmation="configure patient"]
-    #[doc="Configures a patient. This is only called internally, by the Cardiology project."];
-}

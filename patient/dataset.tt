@@ -1,7 +1,4 @@
 dataset @org.thingpedia.cardiology.patient {
-  action () := @org.thingpedia.cardiology.patient.remind()
-  #_[utterances=["record their blood pressure", "need to measure their blood pressure"]];
-
   action (p_systolic :String, p_diastolic :String) := @org.thingpedia.cardiology.patient.record(systolic=p_systolic, diastolic=p_diastolic)
   #_[utterances=["record blood pressure of $p_systolic / $p_diastolic", "my blood pressure is $p_systolic / $p_diastolic"]];
 }

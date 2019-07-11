@@ -1,4 +1,7 @@
 dataset @org.thingpedia.cardiology.doctor {
+  action (p_email :String) := @org.thingpedia.cardiology.doctor.add_patient(email=p_email)
+  #_[utterances=["add patient with email $p_email", "$add p_email"]];
+
   query (p_username :String) := @org.thingpedia.cardiology.doctor.readings(username=p_username)
   #_[utterances=["blood pressure readings of $p_username", "$p_username blood pressure readings"]];
 

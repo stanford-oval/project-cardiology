@@ -61,8 +61,6 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   async do_add_patient({ email }) {
     const key = crypto.randomBytes(16).toString("hex");
 
-    // TODO: database call
-
     const identities = this.engine.messaging.getIdentities();
     const identity = this._findPrimaryIdentity(identities);
 
@@ -70,7 +68,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
     if (!principal)
       throw new Error("This patient does not have a Matrix account");
 
-    const code = `now => @org.thingpedia.cardiology.public.configure_patient(
+    const code = `now => @org.thingpedia.cardiology.patient.configure_patient(
       email="${email}", key="${key}"
     );`
     const program = TT.Grammar.parse(code);

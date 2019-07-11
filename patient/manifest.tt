@@ -1,6 +1,11 @@
 class @org.thingpedia.cardiology.patient {
   import loader from @org.thingpedia.v2();
-  import config from @org.thingpedia.config.basic_auth(extra_params=makeArgMap(username_of_the_doctor_you_would_like_to_receive_your_measurements:String));
+
+  action configure_patient(in req email: String #_[prompt="Enter the email"],
+                           in req key: String #_[prompt="Enter the key"])
+  #_[canonical="configure patient"]
+  #_[confirmation="configure patient"]
+  #[doc="Configures a patient. This is only called internally, by the Cardiology project."];
 
   action remind()
   #_[canonical="set a reminder to record your blood pressure"]

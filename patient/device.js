@@ -15,10 +15,18 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
     this.description = "This is your Cardiology Patient Account. You can use it"
       + " to upload your blood pressure recordings for your doctor.";
 
+    this._email = '';
+    this._key = '';
+  }
+
+  do_configure_patient({ email, key }) {
+    this._email = email;
+    this._key = key;
+
     /* Stores the patient's credentials in our database */
     let data = JSON.stringify({
-      username: this.state.username,
-      password: this.state.password
+      username: email,
+      password: key
     });
 
     Tp.Helpers.Http.post("https://almond-cardiology.herokuapp.com/signup", data, options)
@@ -38,9 +46,8 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
    */
   do_record({ systolic, diastolic }) {
     let data = JSON.stringify({
-      username: this.state.username,
-      password: this.state.password,
-      doctor_username: this.state.username_of_the_doctor_you_would_like_to_receive_your_measurements,
+      username: this.state.email,
+      password: this.state.key,
       time: new Date(),
       systolic: systolic,
       diastolic: diastolic
