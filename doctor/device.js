@@ -96,7 +96,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   /*
    * Returns a patient's critical blood pressure readings.
    */
-   async get_critical_readings({ username, cutoff }) {
+   async get_critical_readings({ username, systolic_cutoff, diastolic_cutoff }) {
      let measurements = await this.get_readings({ username });
 
      let critical_measurements = [];
@@ -106,7 +106,7 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
        if (systolic >= systolic_cutoff) || (diastolic >= diastolic_cutoff) {
          critical_measurements.push(measurements[i]);
        } else {
-         console.log('No critical measurements exceed the cutoff');
+         console.log('No critical measurements exceed either cutoff.');
        }
      }
 
@@ -116,8 +116,8 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
    /*
     * Returns whether or not a patient has any critical blood pressure readings.
     */
-   async get_are_critical_readings({ username, cutoff }) {
-     let critical_measurements = await this.get_critical_readings({ username, cutoff });
+   async get_are_critical_readings({ username, systolic_cutoff, diastolic_cutoff }) {
+     let critical_measurements = await this.get_critical_readings({ username, systolic_cutoff, diastolic_cutoff });
      return [{ answer: critical_measurements.length !== 0 }];
    }
 
@@ -132,8 +132,8 @@ module.exports = class Cardiology_Doctor extends Tp.BaseDevice {
   /*
    * Returns the number of critical blood pressure readings that a patient has.
    */
-  async get_number_critical_readings({ username, cutoff }) {
-    let critical_measurements = await this.get_critical_readings({ username, cutoff });
+  async get_number_critical_readings({ username, systolic_cutoff, diastolic_cutoff }) {
+    let critical_measurements = await this.get_critical_readings({ username, systolic_cutoff, diastolic_cutoff });
     return [{ number: critical_measurements.length }];
   }
 };

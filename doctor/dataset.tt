@@ -1,19 +1,19 @@
 dataset @org.thingpedia.cardiology.doctor {
   action (p_email :String) := @org.thingpedia.cardiology.doctor.add_patient(email=p_email)
-  #_[utterances=["add patient with email $p_email", "$add p_email"]];
+  #_[utterances=["add patient with email $p_email", "add $p_email"]];
 
   query (p_username :String) := @org.thingpedia.cardiology.doctor.readings(username=p_username)
   #_[utterances=["blood pressure readings of $p_username", "$p_username blood pressure readings"]];
 
-  query (p_username :String, p_cutoff :Number) := @org.thingpedia.cardiology.doctor.critical_readings(username=p_username, cutoff=p_cutoff)
-  #_[utterances=["blood pressure readings above $p_cutoff of $p_username", "$p_username blood pressure readings above $p_cutoff"]];
+  query (p_username :String, p_systolic_cutoff :Number, p_diastolic_cutoff :Number) := @org.thingpedia.cardiology.doctor.critical_readings(username=p_username, systolic_cutoff=p_systolic_cutoff, diastolic_cutoff=p_diastolic_cutoff)
+  #_[utterances=["blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff of $p_username", "$p_username blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff"]];
 
-  query (p_username :String, p_cutoff :Number) := @org.thingpedia.cardiology.doctor.are_critical_readings(username=p_username, cutoff=p_cutoff)
-  #_[utterances=["does $p_username have any blood pressure readings above $p_cutoff", "$p_username are there any blood pressure readings above $p_cutoff"]];
+  query (p_username :String, p_systolic_cutoff :Number, p_diastolic_cutoff :Number) := @org.thingpedia.cardiology.doctor.are_critical_readings(username=p_username, systolic_cutoff=p_systolic_cutoff, diastolic_cutoff=p_diastolic_cutoff)
+  #_[utterances=["does $p_username have any blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff", "$p_username are there any blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff"]];
 
   query (p_username :String) := @org.thingpedia.cardiology.doctor.number_readings(username=p_username)
   #_[utterances=["how many blood pressure readings does $p_username have", "$p_username how many blood pressure readings"]];
 
-  query (p_username :String, p_cutoff :Number) := @org.thingpedia.cardiology.doctor.number_critical_readings(username=p_username, cutoff=p_cutoff)
-  #_[utterances=["how many blood pressure readings above $p_cutoff does $p_username have", "$p_username how many blood pressure readings above $p_cutoff"]];
+  query (p_username :String, p_systolic_cutoff :Number, p_diastolic_cutoff :Number) := @org.thingpedia.cardiology.doctor.number_critical_readings(username=p_username, systolic_cutoff=p_systolic_cutoff, diastolic_cutoff=p_diastolic_cutoff)
+  #_[utterances=["how many blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff does $p_username have", "$p_username how many blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff"]];
 }

@@ -9,8 +9,8 @@ class @org.thingpedia.cardiology.doctor {
 
   monitorable list query readings(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
                      out time: String,
-                     out systolic: Measure('mmHg'),
-                     out diastolic: Measure('mmHg'))
+                     out systolic: Measure(mmHg),
+                     out diastolic: Measure(mmHg))
   #_[canonical="blood pressure readings"]
   #_[confirmation="readings"]
   #_[formatted=[{type="text",text="At time ${time}, the patient's blood pressure was ${systolic}/${diastolic}"}]]
@@ -18,10 +18,11 @@ class @org.thingpedia.cardiology.doctor {
   #[poll_interval=60min];
 
   monitorable list query critical_readings(in req username: String #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
-                     in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
+                     in req systolic_cutoff: Number #_[prompt="What's the lowest systolic blood pressure reading that you consider critical?"],
+                     in req diastolic_cutoff: Number #_[prompt="What's the lowest diastolic blood pressure reading that you consider critical?"],
                      out time: String,
-                     out systolic: Measure('mmHg'),
-                     out diastolic: Measure('mmHg'))
+                     out systolic: Measure(mmHg),
+                     out diastolic: Measure(mmHg))
   #_[canonical="get critical blood pressure readings"]
   #_[confirmation="critical readings"]
   #_[formatted=[{type="text",text="At time ${time}, the patient's blood pressure was ${systolic}/${diastolic}"}]]
@@ -47,7 +48,8 @@ class @org.thingpedia.cardiology.doctor {
   #[poll_interval=60min];
 
   monitorable query number_critical_readings(in req username: String #_[prompt="Which patient's readings do you want to check? Please enter the patient's username."],
-                     in req cutoff: Number #_[prompt="What's the lowest blood pressure reading that you consider critical?"],
+                     in req systolic_cutoff: Number #_[prompt="What's the lowest systolic blood pressure reading that you consider critical?"],
+                     in req diastolic_cutoff: Number #_[prompt="What's the lowest diastolic blood pressure reading that you consider critical?"],
                      out number: Number)
   #_[canonical="number of critical blood pressure readings"]
   #_[confirmation="number of critical readings"]
