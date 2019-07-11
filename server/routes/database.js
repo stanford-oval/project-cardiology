@@ -6,7 +6,7 @@ var connection = require('../database');
 router.post('/upload', (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  let time = req.body.time;
+  let time = new Date();
   let systolic = req.body.systolic;
   let diastolic = req.body.diastolic;
 

@@ -28,7 +28,6 @@ module.exports = class Cardiology_Patient extends Tp.BaseDevice {
     let data = JSON.stringify({
       username: this.state.email,
       password: this.state.key,
-      time: new Date(),
       systolic: systolic,
       diastolic: diastolic
     });
