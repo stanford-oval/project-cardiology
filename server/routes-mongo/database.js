@@ -26,9 +26,7 @@ router.post('/upload', (req, res) => {
       return res.status(500).json({ error: 'Error connecting to the MongoDB database' });
     }
 
-    const patients = client.db("cardiology").collection("patients");
     const users = client.db("cardiology").collection("users");
-
     users.findOne({ username: username }, (err, user) => {
       if (!user) {
         return res.status(400).json({ error: "Patient with this username doesn't exist" });
@@ -42,27 +40,15 @@ router.post('/upload', (req, res) => {
           return res.status(400).json({ error: "The password is incorrect" });
         }
 
-        patients.findOne({ username: username }, (err, patient) => {
-          if (patient) {
-            patients.update(
-              { "_id" : patient._id  },
-              { "$addToSet" : { "measurements" : { "time": time, "systolic": systolic, "diastolic": diastolic } } }
-            );
-
-            res.sendStatus(200);
-          } else {
-            patients.insertOne({
-              username: username,
-              measurements: [{
-                time: time,
-                systolic: systolic,
-                diastolic: diastolic
-              }]
-            });
-
-            res.sendStatus(200);
-          }
+        const patients = client.db("cardiology").collection("patients");
+        patients.insertOne({
+          username: username,
+          time: time,
+          systolic: systolic,
+          diastolic: diastolic
         });
+
+        res.sendStatus(200);
       });
     });
   });
@@ -71,13 +57,6 @@ router.post('/upload', (req, res) => {
 router.get('/retrieve', (req, res) => {
   let doctor_username = req.query.doctor_username;
   let doctor_password = req.query.doctor_password;
-  let username = req.query.username;
-
-  if (username === null || username.length < 1) {
-    return res.status(400).json({ error: 'Username not found' });
-  }
-
-  console.log('Retrieving measurements from: ' + username);
 
   client.connect(err => {
     if (err) {
@@ -100,12 +79,12 @@ router.get('/retrieve', (req, res) => {
           return res.status(400).json({ error: "The password is incorrect" });
         }
 
-        patients.findOne({ username: username }, (err, patient) => {
-          if (!patient) {
-            return res.status(400).json({ error: "There doesn't exist a patient with this username" });
+        patients.find((err, patients) => {
+          if (!patients) {
+            return res.status(400).json({ error: "You don't have any patients yet" });
           }
 
-          return res.status(200).json(patient.measurements);
+          return res.status(200).json(patients);
         });
       });
     });
