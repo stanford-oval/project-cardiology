@@ -79,7 +79,7 @@ router.get('/retrieve', (req, res) => {
           return res.status(400).json({ error: "The password is incorrect" });
         }
 
-        patients.find((err, patient_list) => {
+        patients.find({}).toArray((err, patient_list) => {
           if (!patient_list) {
             return res.status(400).json({ error: "You don't have any patients yet" });
           }
