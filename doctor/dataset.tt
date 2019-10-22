@@ -1,44 +1,56 @@
 dataset @org.thingpedia.cardiology.doctor language "en" {
     action (p_email :Entity(tt:email_address))  := @org.thingpedia.cardiology.doctor.add_patient(email=p_email)
-    #_[utterances=["add patient with email $p_email",
-                   "add $p_email"]]
-    #[id=34553081];
+    #_[utterances=["make cardiology account for $p_email",
+                   "get cardiology account for $p_email",
+                   "add patient with email $p_email",
+                   "set up a cardiology account for $p_email",
+                   "create cardiology account for $p_email"]]
+    #[id=53246707]
+    #[name=""];
 
-    query  := @org.thingpedia.cardiology.doctor.readings()
-    #_[utterances=["all blood pressure readings"]]
-    #[id=34553083];
+    query  := @org.thingpedia.cardiology.doctor.readings(patient=$?)
+    #_[utterances=["all blood pressure readings",
+                   "blood pressure readings",
+                   "all cardiology readings",
+                   "cardiology readings",
+                   "blood pressure measurements",
+                   "blood pressure recordings",
+                   "recordings of blood pressure",
+                   "measurements of blood pressure",
+                   "readings of blood pressure"]]
+    #[id=53246712]
+    #[name=""];
 
-    query (p_username :Entity(tt:email_address))  := (@org.thingpedia.cardiology.doctor.readings()), username == p_username
-    #_[utterances=["blood pressure readings of $p_username",
-                   "$p_username blood pressure readings"]]
-    #[id=34553084];
+    query (p_patient :Entity(tt:email_address))  := @org.thingpedia.cardiology.doctor.readings(patient=p_patient)
+    #_[utterances=["get blood pressure history for $p_patient",
+                   "retrieve blood pressure history for $p_patient",
+                   "get blood pressure for $p_patient",
+                   "retrieve blood pressure for $p_patient",
+                   "get blood pressure measurements for $p_patient",
+                   "get blood pressure recordings for $p_patient",
+                   "retrieve blood pressure measurements for $p_patient",
+                   "retrieve blood pressure recordings for $p_patient"]]
+    #[id=53246721]
+    #[name=""];
 
-    query (p_systolic_cutoff :Measure(Pa), p_diastolic_cutoff :Measure(Pa))  := (@org.thingpedia.cardiology.doctor.readings()), (systolic >= p_systolic_cutoff || diastolic >= p_diastolic_cutoff)
-    #_[utterances=["blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff"]]
-    #[id=34553086];
+    query (p_systolic_cutoff :Number, p_diastolic_cutoff :Number)  := (@org.thingpedia.cardiology.doctor.readings(patient=$?)), (systolic >= p_systolic_cutoff || diastolic >= p_diastolic_cutoff)
+    #_[utterances=["blood pressure measurements above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "blood pressure above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "blood pressure recordings above $p_systolic_cutoff / $p_diastolic_cutoff"]]
+    #[id=53246729]
+    #[name=""];
 
-    query (p_username :Entity(tt:email_address), p_systolic_cutoff :Measure(Pa), p_diastolic_cutoff :Measure(Pa))  := (@org.thingpedia.cardiology.doctor.readings()), (username == p_username && (systolic >= p_systolic_cutoff || diastolic >= p_diastolic_cutoff))
-    #_[utterances=["$p_username's blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff",
+    query (p_username :Entity(tt:email_address), p_systolic_cutoff :Number, p_diastolic_cutoff :Number)  := (@org.thingpedia.cardiology.doctor.readings(patient=$?)), (username == p_username && (systolic >= p_systolic_cutoff || diastolic >= p_diastolic_cutoff))
+    #_[utterances=["$p_username's blood pressure measurements above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "blood pressure measurements for $p_username above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "$p_username's blood pressure recordings above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "blood pressure recordings for $p_username above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "$p_username's blood pressure above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "blood pressure for $p_username above $p_systolic_cutoff / $p_diastolic_cutoff",
+                   "$p_username's blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff",
                    "blood pressure readings for $p_username above $p_systolic_cutoff / $p_diastolic_cutoff"]]
-    #[id=34553087];
-
-    query (p_username :Entity(tt:email_address))  := aggregate count of ((@org.thingpedia.cardiology.doctor.readings()), username == p_username)
-    #_[utterances=["the number of blood pressure readings for $p_username",
-                   "how many blood readings $p_username has"]]
-    #[id=34553089];
-
-    program (p_username :Entity(tt:email_address))  := {
-  now => aggregate count of ((@org.thingpedia.cardiology.doctor.readings()), username == p_username) => notify;
-}
-    #_[utterances=["how many blood pressure readings does $p_username have",
-                   "$p_username how many blood pressure readings"]]
-    #[id=34553091];
-
-    program (p_username :Entity(tt:email_address), p_systolic_cutoff :Measure(Pa), p_diastolic_cutoff :Measure(Pa))  := {
-  now => (@org.thingpedia.cardiology.doctor.readings()), (username == p_username && (systolic >= p_systolic_cutoff || diastolic >= p_diastolic_cutoff)) => notify;
-}
-    #_[utterances=["how many blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff does $p_username have",
-                   "$p_username how many blood pressure readings above $p_systolic_cutoff / $p_diastolic_cutoff"]]
-    #[id=34553093];
+    #[id=53246733]
+    #[name=""];
 
 }

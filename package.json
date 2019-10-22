@@ -3,19 +3,11 @@
   "version": "1.0.0",
   "description": "Cardiology project for the Almond team",
   "scripts": {
-    "build": "npm run buildDoctor && npm run buildPatient && npm run buildService",
-    "buildDoctor": "npm run copyDoctor && npm run zipDoctor && npm run cleanDoctor",
-    "copyDoctor": "mkdir doctor_zip && cp doctor/device.js doctor_zip/ && cp doctor/package.json doctor_zip/ && cp doctor/package-lock.json doctor_zip/ && cp -R doctor/node_modules doctor_zip/",
-    "zipDoctor": "cd doctor_zip && zip -r ../doctor.zip * && cd ..",
-    "cleanDoctor": "rm -r doctor_zip",
-    "buildPatient": "npm run copyPatient && npm run zipPatient && npm run cleanPatient",
-    "copyPatient": "mkdir patient_zip && cp patient/device.js patient_zip/ && cp patient/package.json patient_zip/",
-    "zipPatient": "cd patient_zip && zip -r ../patient.zip * && cd ..",
-    "cleanPatient": "rm -r patient_zip",
-    "buildService": "npm run copyPatient && npm run zipPatient && npm run cleanPatient",
-    "copyService": "mkdir patient_zip && cp patient/device.js patient_zip/ && cp patient/package.json patient_zip/",
-    "zipService": "cd patient_zip && zip -r ../patient.zip * && cd ..",
-    "cleanService": "rm -r patient_zip"
+    "prepare": "make",
+    "make": "make"
   },
-  "author": "Ricky Grannis-Vu, Elvis Zhang"
+  "author": "Ricky Grannis-Vu, Elvis Zhang",
+  "devDependencies": {
+    "eslint": "^6.5.1"
+  }
 }

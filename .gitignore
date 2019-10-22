@@ -1,14 +1,3 @@
-/doctor/node_modules
-/doctor/package-lock.json
-/doctor/.DS_Store
-
-/patient/node_modules
-/patient/package-lock.json
-/patient/.DS_Store
-
-/doctor_zip
-/doctor.zip
-/patient_zip
-/patient.zip
-
+node_modules
 .DS_Store
+*.zip

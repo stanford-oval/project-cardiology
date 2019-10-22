@@ -1,10 +1,16 @@
-class @org.thingpedia.cardiology.patient {
+class @org.thingpedia.cardiology.patient
+#_[thingpedia_name="Cardiology (Patient)"]
+#_[thingpedia_description="The patient's interface to the cardiology project, which is run by the Almond team."]
+#[subcategory="health"]
+#[license="MIT"]
+#[license_gplcompatible=true]
+{
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.builtin();
 
-  action record(in opt systolic: Measure(Pa) #_[prompt="Please enter your systolic blood pressure reading."],
-                in opt diastolic: Measure(Pa) #_[prompt="Please enter your diastolic blood pressure reading."])
-  #_[canonical="record your blood pressure reading"]
-  #_[confirmation="record reading"]
-  #[doc="Uploads your blood pressure reading to your doctor's database."];
+  action record(in opt systolic: Number #_[prompt="Please enter your systolic blood pressure measurement (the top number)."],
+                in opt diastolic: Number #_[prompt="Please enter your diastolic blood pressure measurement (the bottom number)."])
+  #_[canonical="prompt patient to measure blood pressure"]
+  #_[confirmation="record blood pressure"]
+  #[doc="Sends your blood pressure measurements to your doctor."];
 }

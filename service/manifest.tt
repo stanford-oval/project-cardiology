@@ -1,4 +1,10 @@
-class @org.thingpedia.cardiology.patient.config {
+class @org.thingpedia.cardiology.patient.config
+#_[thingpedia_name="Cardiology Support Service"]
+#_[thingpedia_description="This is a service that internally supports the Cardiology Assistant. It cannot be used directly."]
+#[subcategory="health"]
+#[license="MIT"]
+#[license_gplcompatible=true]
+{
     import loader from @org.thingpedia.v2();
 
     action configure_patient(in req email : EmailAddress,

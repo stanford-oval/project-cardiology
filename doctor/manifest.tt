@@ -1,20 +1,27 @@
-class @org.thingpedia.cardiology.doctor {
+class @org.thingpedia.cardiology.doctor
+#_[thingpedia_name="Cardiology (Doctor)"]
+#_[thingpedia_description="The doctor's interface to the cardiology project, which is run by the Almond team."]
+#[subcategory="health"]
+#[license="MIT"]
+#[license_gplcompatible=true]
+{
   import loader from @org.thingpedia.v2();
   import config from @org.thingpedia.config.basic_auth();
 
   action add_patient(in req email: EmailAddress #_[prompt="Enter the email of the patient you would like to add to the system."])
-  #_[canonical="add patient"]
+  #_[canonical="add a patient"]
   #_[confirmation="add patient"]
   #[doc="Add a patient to the Cardiology system."];
 
   monitorable list query readings(
-                     out username: EmailAddress #_[prompt="Which patient's readings do you want to see? Please enter the patient's username."],
+                     in req patient: EmailAddress #_[prompt="Enter the email of the patient you would like to retrieve."] #_[canonical="patient"],
+                     out username: EmailAddress,
                      out time: Date,
-                     out systolic: Measure(mmHg),
-                     out diastolic: Measure(mmHg))
+                     out systolic: Number,
+                     out diastolic: Number)
   #_[canonical="blood pressure readings"]
   #_[confirmation="readings"]
-  #_[formatted=[{type="text",text="At time ${time}, ${username}'s blood pressure was ${systolic:mmHg}/${diastolic:mmHg}"}]]
-  #[doc="Get all of the patient's blood pressure readings."]
+  #_[formatted=[{type="text",text="At ${time}, ${username}'s blood pressure was ${systolic}/${diastolic}"}]]
+  #[doc="Get all blood pressure readings."]
   #[poll_interval=60min];
 }
